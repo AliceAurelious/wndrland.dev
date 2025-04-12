@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer>
+    document.addEventListener('DOMContentLoaded', function(){
+        // Initialising the canvas
+        var canvas = document.querySelector('canvas'),
+            ctx = canvas.getContext('2d');
+
+        // Setting the width and height of the canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Setting up the letters
+        var letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ';
+        letters = letters.split('');
+
+        // Setting up the columns
+        var fontSize = 18,
+            columns = canvas.width / fontSize;
+
+        // Setting up the drops
+        var drops = [];
+        for (var i = 0; i < columns; i++) {
+            // start above screen -100% to 0%
+            drops[i] = (Math.random() - 1.0) * canvas.height / fontSize;
+        }
+
+        // Setting up the draw function
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, .1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < drops.length; i++) {
+                var text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillStyle = '#90c';//'#c0f';
+                ctx.font = ""+fontSize+"px monospace";
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                drops[i]++;
+                if (drops[i] * fontSize > canvas.height && Math.random() > .95) {
+                    drops[i] = 0;
+                }
+            }
+        }
+
+        // Loop the animation
+        var refreshIntervalId = setInterval(draw, 50);
+
+        addEventListener("resize", (event) => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops = [];
+            for (var i = 0; i < columns; i++) {
+                // start above screen -100% to 0%
+                drops[i] = (Math.random() - 1.0) * canvas.height / fontSize;
+            }
+            clearInterval(refreshIntervalId);
+            // Loop the animation
+            refreshIntervalId = setInterval(draw, 50);
+        });
+    });
+    </script>
+    <style>
+        * {margin: 0; padding: 0}
+        body {
+            background: #000;
+            color: aliceblue;
+        }
+        canvas {
+            display: block;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="https://chaos.social/@CatMaidLeugim">Fediverse/Mastodon</a></li>
+            <li><a href="https://github.com/AliceAurelious">GitHub</a></li>
+            <li><a href="https://matrix.to/#/@platinumcatmaid:entropia.de">matrix</a></li> 
+            <li><a href="#" onclick="javascript:navigator.clipboard.writeText('alice.aurelious');alert('copied to clipboard!');return false">discord</a></li> 
+            <li><a href="https://www.instagram.com/alice.aurelious/">instagram</a></li>
+        </ul>
+    </nav>
+    <footer> matrix effect based on <a href="https://codepen.io/yaclive/pen/EayLYO">codepen </a> by Clive Cooper</footer>
+    <canvas></canvas>
+</body>
+
+</html>
