@@ -49,18 +49,24 @@
 
             // Loop the animation
             var refreshIntervalId = setInterval(draw, 50);
-
+            var lastWidth = window.innerWidth;
             addEventListener("resize", (event) => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                drops = [];
-                for (var i = 0; i < columns; i++) {
-                    // start above screen -100% to 0%
-                    drops[i] = (Math.random() - 1.0) * canvas.height / fontSize;
+
+                // prevent resize on mobile (scroll hides/shows bar) from firing the reset
+                const currentWidth = window.innerWidth;
+                if (currentWidth !== lastWidth) {
+                    lastWidth = currentWidth;
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    drops = [];
+                    for (var i = 0; i < columns; i++) {
+                        // start above screen -100% to 0%
+                        drops[i] = (Math.random() - 1.0) * canvas.height / fontSize;
+                    }
+                    clearInterval(refreshIntervalId);
+                    // Loop the animation
+                    refreshIntervalId = setInterval(draw, 50);
                 }
-                clearInterval(refreshIntervalId);
-                // Loop the animation
-                refreshIntervalId = setInterval(draw, 50);
             });
         });
     </script>
