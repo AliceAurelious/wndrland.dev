@@ -4,91 +4,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Alice's Links</title>
+    <meta name="viewport" content="initial-scale=1.0">
     <script defer>
-    document.addEventListener('DOMContentLoaded', function(){
-        // Initialising the canvas
-        var canvas = document.querySelector('canvas'),
-            ctx = canvas.getContext('2d');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialising the canvas
+            var canvas = document.querySelector('canvas'),
+                ctx = canvas.getContext('2d');
 
-        // Setting the width and height of the canvas
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // Setting up the letters
-        var letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ';
-        letters = letters.split('');
-
-        // Setting up the columns
-        var fontSize = 18,
-            columns = canvas.width / fontSize;
-
-        // Setting up the drops
-        var drops = [];
-        for (var i = 0; i < columns; i++) {
-            // start above screen -100% to 0%
-            drops[i] = (Math.random() - 1.0) * canvas.height / fontSize;
-        }
-
-        // Setting up the draw function
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, .1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            for (var i = 0; i < drops.length; i++) {
-                var text = letters[Math.floor(Math.random() * letters.length)];
-                ctx.fillStyle = '#90c';//'#c0f';
-                ctx.font = ""+fontSize+"px monospace";
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                drops[i]++;
-                if (drops[i] * fontSize > canvas.height && Math.random() > .95) {
-                    drops[i] = 0;
-                }
-            }
-        }
-
-        // Loop the animation
-        var refreshIntervalId = setInterval(draw, 50);
-
-        addEventListener("resize", (event) => {
+            // Setting the width and height of the canvas
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            drops = [];
+
+            // Setting up the letters
+            var letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ';
+            letters = letters.split('');
+
+            // Setting up the columns
+            var fontSize = 18,
+                columns = canvas.width / fontSize;
+
+            // Setting up the drops
+            var drops = [];
             for (var i = 0; i < columns; i++) {
                 // start above screen -100% to 0%
                 drops[i] = (Math.random() - 1.0) * canvas.height / fontSize;
             }
-            clearInterval(refreshIntervalId);
+
+            // Setting up the draw function
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, .1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                for (var i = 0; i < drops.length; i++) {
+                    var text = letters[Math.floor(Math.random() * letters.length)];
+                    ctx.fillStyle = '#90c';//'#c0f';
+                    ctx.font = "" + fontSize + "px monospace";
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    drops[i]++;
+                    if (drops[i] * fontSize > canvas.height && Math.random() > .95) {
+                        drops[i] = 0;
+                    }
+                }
+            }
+
             // Loop the animation
-            refreshIntervalId = setInterval(draw, 50);
+            var refreshIntervalId = setInterval(draw, 50);
+
+            addEventListener("resize", (event) => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drops = [];
+                for (var i = 0; i < columns; i++) {
+                    // start above screen -100% to 0%
+                    drops[i] = (Math.random() - 1.0) * canvas.height / fontSize;
+                }
+                clearInterval(refreshIntervalId);
+                // Loop the animation
+                refreshIntervalId = setInterval(draw, 50);
+            });
         });
-    });
     </script>
     <style>
-        * {margin: 0; padding: 0}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: #000;
             color: aliceblue;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: monospace;
+            font-size: min(20px, 5vw);
+            padding: 2em;
+            line-height: 1.8;
         }
+
         canvas {
             display: block;
             position: fixed;
             inset: 0;
             z-index: -1;
         }
+
+        header {
+            img {
+                border-radius: 20%;
+                width: 200px;
+                max-width: 100%;
+                margin: 1em auto;
+                display: block;
+            }
+        }
+
+        nav {
+            width:550px;
+            max-width: 100%;
+            ul {
+                list-style: none;
+
+                li {
+                    padding: 0 3em;
+
+                    a {
+                        color: white;
+                        border: 1px solid;
+                        padding: 1em;
+                        display: block;
+                        text-align: center;
+                        border-radius: .2em;
+                        margin: 1em 0;
+                        text-decoration: none;
+                        backdrop-filter: blur(3px);
+                        position: relative;
+                        max-width: 100%;
+                        transition: .2s background linear;
+
+                        &:hover {
+                            background: #fff2;
+                        }
+
+                        span {
+                            display: inline-block;
+                        }
+
+                        img {
+                            filter: invert(1);
+                            color:black;
+                            position: absolute;
+                            left: -3em;
+                            height: 2em;
+                            vertical-align: middle;
+                            top: calc(50% - 1em);
+                        }
+                    }
+                }
+            }
+        }
+
+        footer {
+            background-color:#000a;
+            backdrop-filter: blur(3px);
+            padding:1em;
+            opacity: .6;
+            font-size: 14px;
+            margin-top:4em;
+
+            a {
+                color: rgb(220, 106, 249);
+            }
+        }
     </style>
 </head>
 
 <body>
     <nav>
+        <header>
+            <h1>Hi! I'm Alice</h1>
+            <img src="alice.jpg" alt="Portrait of Alice" />
+            <p>Just a 25 year old stereotypical transfem I guess (she/her)</p>
+        </header>
+
         <ul>
-            <li><a href="https://chaos.social/@CatMaidLeugim">Fediverse/Mastodon</a></li>
-            <li><a href="https://github.com/AliceAurelious">GitHub</a></li>
-            <li><a href="https://matrix.to/#/@platinumcatmaid:entropia.de">matrix</a></li> 
-            <li><a href="#" onclick="javascript:navigator.clipboard.writeText('alice.aurelious');alert('copied to clipboard!');return false">discord</a></li> 
-            <li><a href="https://www.instagram.com/alice.aurelious/">instagram</a></li>
+            <li><a href="https://chaos.social/@CatMaidLeugim"><img alt="Mastodon/Fediverse" src="socials/icons8-mastodon.svg">
+                    @CatMaidLeugim<span>@chaos.social</span></a></li>
+            <li><a href="https://github.com/AliceAurelious"><img alt="GitHub" src="socials/icons8-github.svg"> @AliceAurelious</a>
+            </li>
+            <li><a href="https://matrix.to/#/@platinumcatmaid:entropia.de"><img alt="Matrix" src="socials/icons8-matrix.svg">
+                    @platinumcatmaid<span>:entropia.de</span></a></li>
+            <li><a href="#"
+                    onclick="javascript:navigator.clipboard.writeText('alice.aurelious');alert('copied to clipboard!');return false"><img alt="Discord"
+                        src="socials/icons8-discord.svg"> @alice.aurelious</a></li>
+            <li><a href="https://www.instagram.com/alice.aurelious/"><img alt="Instagram" src="socials/icons8-instagram.svg">
+                    @alice.aurelious</a></li>
+            <li><a href="https://www.linkedin.com/in/alice-wonderland/"><img alt="LinkedIn" src="socials/icons8-linkedin.svg">
+                    @alice-wonderland</a></li>
         </ul>
     </nav>
-    <footer> matrix effect based on <a href="https://codepen.io/yaclive/pen/EayLYO">codepen </a> by Clive Cooper</footer>
+    <footer>
+        <a href="https://tea.wtf">@tea</a> thanks for help.<br>
+        matrix effect based on <a href="https://codepen.io/yaclive/pen/EayLYO">codepen</a> by Clive Cooper<br>
+        icons by <a href="https://icons8.com/icons">icon8.com</a>
+    </footer>
     <canvas></canvas>
 </body>
 
