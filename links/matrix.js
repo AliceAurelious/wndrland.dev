@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.height = window.innerHeight;
 
     // Setting up the letters
-    var letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ';
+    var letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöüß0123456789!%&|<>=,;.:-_+*~#^°@€';
     letters = letters.split('');
 
     // Setting up the columns
